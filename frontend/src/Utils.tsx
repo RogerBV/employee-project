@@ -1,4 +1,4 @@
-const BACKENDSERVER = 'http://localhost:3000/'
+const BACKENDSERVER = 'http://' + process.env.BACKEND_SERVER + ':'+ process.env.BACKEND_PORT+'/'
 
 import { differenceInYears, differenceInMonths, differenceInDays, subYears, subMonths } from 'date-fns';
 
