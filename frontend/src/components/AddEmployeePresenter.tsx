@@ -22,6 +22,9 @@ interface AddEmployeePresenterProps {
     onOpenCloseEmployeeModal: () => void
     onHandleImageUpload: (e) => Promise<void>
     onSaveEmployee: () => Promise<void>
+    validFirstNameParam: boolean
+    validLastNameParam: boolean
+    validTelephoneNumberParam: boolean
 }
 
 const AddEmployeePresenter = ({ 
@@ -39,7 +42,10 @@ const AddEmployeePresenter = ({
     errorMessageParam,
     onOpenCloseEmployeeModal,
     onHandleImageUpload,
-    onSaveEmployee
+    onSaveEmployee,
+    validFirstNameParam,
+    validLastNameParam,
+    validTelephoneNumberParam
 }: AddEmployeePresenterProps) => {
     return (
         <div className="container">
@@ -69,7 +75,7 @@ const AddEmployeePresenter = ({
                             First Name
                         </div>
                         <div className="col-7">
-                            <input type="text" className="form-control" value={firstNameParam} onChange={(e) => onFirstName(e.target.value)} />
+                            <input type="text" className={validFirstNameParam ? 'form-control is-valid' : 'form-control is-invalid'} value={firstNameParam} onChange={(e) => onFirstName(e.target.value)} />
                         </div>
                     </div>
                     <div className="row mb-3">
@@ -77,7 +83,7 @@ const AddEmployeePresenter = ({
                             Last Name
                         </div>
                         <div className="col-7">
-                            <input type="text" className="form-control" value={lastNameParam} onChange={(e) => onLastName(e.target.value)} />
+                            <input type="text" className={validLastNameParam ? 'form-control is-valid' : 'form-control is-invalid'} value={lastNameParam} onChange={(e) => onLastName(e.target.value)} />
                         </div>
                     </div>
 
@@ -95,7 +101,7 @@ const AddEmployeePresenter = ({
                             Telephone
                         </div>
                         <div className="col-7">
-                            <input type="text" className="form-control" value={telephoneParam} onChange={(e) => onTelephone(e.target.value)} />
+                            <input type="text" className={validTelephoneNumberParam ? 'form-control is-valid' : 'form-control is-invalid'} value={telephoneParam} onChange={(e) => onTelephone(e.target.value)} />
                         </div>
                     </div>
                     <div className="row mb-3">

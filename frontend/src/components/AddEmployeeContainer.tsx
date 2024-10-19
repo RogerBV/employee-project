@@ -24,6 +24,12 @@ const AddEmployeeContainer = ({ onEmployeeList }: AddEmployeeContainerProps) => 
     const [errorMessage, setErrorMessage] = useState('')
     const [imageFile, setImageFile] = useState<File | null> (null);
     const [imageUrl, setImageUrl] = useState<string | null>(null);
+    const [validFirstName, setValidFirstName] = useState(false)
+    const [validLastName, setValidLastName] = useState(false)
+    const [validTelephoneNumber, setValidTelephoneNumber] = useState(false)
+
+    const regularExpression = "^[A-Z][a-z]*$";
+    const telephoneNumberRegularExpression = "^d{9}$";
 
     const cleanForm = () => {
         setFirstName('')
@@ -115,12 +121,18 @@ const AddEmployeeContainer = ({ onEmployeeList }: AddEmployeeContainerProps) => 
                 firstNameParam={firstName}
                 onFirstName={
                     async(value: string) => {
+                        var regex = new RegExp(regularExpression)
+                        const result = regex.test(value)
+                        setValidFirstName(result)
                         setFirstName(value)
                     }
                 } 
                 lastNameParam={lastName} 
                 onLastName={
                     async(value: string) => {
+                        var regex = new RegExp(regularExpression)
+                        const result = regex.test(value)
+                        setValidLastName(result)
                         setLastName(value)
                     }
                 }
@@ -133,6 +145,9 @@ const AddEmployeeContainer = ({ onEmployeeList }: AddEmployeeContainerProps) => 
                 telephoneParam={telephone}
                 onTelephone={
                     async(value: string) => {
+                        var regex = new RegExp(telephoneNumberRegularExpression)
+                        const result = regex.test(value)
+                        setValidTelephoneNumber(result)
                         setTelephone(value)
                     }
                 }
@@ -154,7 +169,9 @@ const AddEmployeeContainer = ({ onEmployeeList }: AddEmployeeContainerProps) => 
                         saveEmployee()
                     }
                 }
-                
+                validFirstNameParam={validFirstName}
+                validLastNameParam={validLastName}
+                validTelephoneNumberParam={validTelephoneNumber}
             />
         </>
     )
