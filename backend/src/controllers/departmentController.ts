@@ -1,10 +1,9 @@
-import { PrismaClient } from "@prisma/client"
 import { Request, Response } from "express"
-const prisma = new PrismaClient()
+import { getAllDepartmentsDAO, insertDepartmentDAO } from "../dao/DepartmentDAO"
 
 const getAllDepartments = async (request: Request, response: Response): Promise<void> => {
     try {
-        const result = await prisma.department.findMany()
+        const result = await getAllDepartmentsDAO()
         response.json(result)
     } catch(error) {
         console.error(error)
@@ -14,11 +13,7 @@ const getAllDepartments = async (request: Request, response: Response): Promise<
 const insertDepartment = async (request: Request, response: Response): Promise<void> => {
     try {
         const objDepartment = request.query as { departmentName }
-        const result = await prisma.department.create({
-            data: {
-                departmentName: objDepartment.departmentName
-            }
-        })
+        const result = await insertDepartmentDAO(objDepartment.departmentName)
         response.json(result)
     } catch(error) {
         console.error(error);

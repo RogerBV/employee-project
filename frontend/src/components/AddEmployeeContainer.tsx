@@ -27,9 +27,11 @@ const AddEmployeeContainer = ({ onEmployeeList }: AddEmployeeContainerProps) => 
     const [validFirstName, setValidFirstName] = useState(false)
     const [validLastName, setValidLastName] = useState(false)
     const [validTelephoneNumber, setValidTelephoneNumber] = useState(false)
-
+    const [validSelectedDepartment, setValidSelectedDepartment] = useState(false)
+    const [validAddress, setValidAddress] = useState(true) 
     const regularExpression = "^[A-Z][a-z]*$";
-    const telephoneNumberRegularExpression = "^d{9}$";
+    const addressRegularExpression = "^[A-Z][a-z 0-9 ]*$";
+    const telephoneNumberRegularExpression = "^[0-9]{9}$";
 
     const cleanForm = () => {
         setFirstName('')
@@ -160,6 +162,11 @@ const AddEmployeeContainer = ({ onEmployeeList }: AddEmployeeContainerProps) => 
                 selectedDepartmentParam={selectedDepartment}
                 onSelectedDepartment={
                     async(value: number) => {
+                        if (value == 0) {
+                            setValidSelectedDepartment(false)
+                        } else {
+                            setValidSelectedDepartment(true)
+                        }
                         setSelectedDepartment(value)
                     }
                 }
@@ -172,6 +179,8 @@ const AddEmployeeContainer = ({ onEmployeeList }: AddEmployeeContainerProps) => 
                 validFirstNameParam={validFirstName}
                 validLastNameParam={validLastName}
                 validTelephoneNumberParam={validTelephoneNumber}
+                validSelectedDeparmentParam={validSelectedDepartment}
+                validAddressParam={validAddress}
             />
         </>
     )

@@ -24,7 +24,9 @@ interface AddEmployeePresenterProps {
     onSaveEmployee: () => Promise<void>
     validFirstNameParam: boolean
     validLastNameParam: boolean
+    validAddressParam: boolean
     validTelephoneNumberParam: boolean
+    validSelectedDeparmentParam: boolean
 }
 
 const AddEmployeePresenter = ({ 
@@ -45,7 +47,9 @@ const AddEmployeePresenter = ({
     onSaveEmployee,
     validFirstNameParam,
     validLastNameParam,
-    validTelephoneNumberParam
+    validAddressParam,
+    validTelephoneNumberParam,
+    validSelectedDeparmentParam
 }: AddEmployeePresenterProps) => {
     return (
         <div className="container">
@@ -92,7 +96,7 @@ const AddEmployeePresenter = ({
                             Address
                         </div>
                         <div className="col-7">
-                            <input type="text" className="form-control" value={addressParam} onChange={(e) => onAddress(e.target.value)} />
+                            <input type="text" className={validAddressParam ? 'form-control is-valid' : 'form-control is-invalid'} value={addressParam} onChange={(e) => onAddress(e.target.value)} />
                         </div>
                     </div>
 
@@ -109,7 +113,7 @@ const AddEmployeePresenter = ({
                             Department:
                         </div>
                         <div className="col-7">
-                            <select className="form-select" value={selectedDepartmentParam} onChange={(e)  => onSelectedDepartment(Number(e.target.value))}>
+                            <select className={validSelectedDeparmentParam ? 'form-select is-valid' : 'form-select is-invalid'} value={selectedDepartmentParam} onChange={(e)  => onSelectedDepartment(Number(e.target.value))}>
                                 <option value={0}>Select an Department</option>
                                 {                                            
                                     deparmentsParam.map((element: Department) => {
