@@ -52,7 +52,6 @@ steps:
       done
       
       echo "PostgreSQL is running."
-      echo $(DATABASE_URL)
     else
       echo "The Docker container is not running."
     fi
