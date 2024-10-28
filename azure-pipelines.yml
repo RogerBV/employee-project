@@ -40,7 +40,7 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
-    docker run -d --name database -e POSTGRES_USER=$[variables.DB_USER] -e POSTGRES_PASSWORD=123456 -e POSTGRES_DB=employeedb -p 5432:5432 postgres:17beta2
+    docker run -d --name database -e POSTGRES_USER=${{ variables.DB_USER }} -e POSTGRES_PASSWORD=123456 -e POSTGRES_DB=employeedb -p 5432:5432 postgres:17beta2
   displayName: 'Run PostgreSQL Docker Container'
 
 - script: |
