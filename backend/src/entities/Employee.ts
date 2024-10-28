@@ -7,7 +7,7 @@ interface Employee {
     address: string;
     telephone: string;
     imageUrl: string;
-    departmentId: number;
+    departmentId: string;
     department: Department;
     hireDate: string;
     imageFile: File | null;

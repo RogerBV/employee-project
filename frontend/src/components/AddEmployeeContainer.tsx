@@ -20,7 +20,7 @@ const AddEmployeeContainer = ({ onEmployeeList }: AddEmployeeContainerProps) => 
         return today;
       });
     const [showModal, setShowModal] = useState(false)
-    const [selectedDepartment, setSelectedDepartment] = useState(0)
+    const [selectedDepartment, setSelectedDepartment] = useState<Number>(0)
     const [errorMessage, setErrorMessage] = useState('')
     const [imageFile, setImageFile] = useState<File | null> (null);
     const [imageUrl, setImageUrl] = useState<string | null>(null);

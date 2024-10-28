@@ -1,0 +1,76 @@
+# Node.js
+# Build a general Node.js project with npm.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  - name: POSTGRES_USER
+    value: admin
+  - name: POSTGRES_PASSWORD
+    value: 123456
+  - name: DB_NAME
+    value: employeedb
+  - name: DB_ENGINE
+    value: postgresql
+  - name: DB_HOST
+    value: localhost
+  - name: DB_USER
+    value: admin
+  - name: DB_PASSWORD
+    value: 123456
+  - name: DB_PORT
+    value: 5432
+  - name: BACKEND_PORT
+    value: 3000
+  - name: BACKEND_SERVER
+    value: localhost
+  - name: DATABASE_URL
+    value: $(DB_ENGINE)://$(DB_USER):$(DB_PASSWORD)@$(DB_HOST):$(DB_PORT)/$(DB_NAME)?schema=public
+
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '20.x'
+  displayName: 'Install Node.js'
+
+- script: |
+    docker run -d --name database -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=123456 -e POSTGRES_DB=employeedb -p 5432:5432 postgres:17beta2
+  displayName: 'Run PostgreSQL Docker Container'
+
+- script: |
+    sleep 70
+
+
+- script: |
+    if [ $(docker ps -q -f name=database) ]; then
+      echo "Docker container is running."
+      while ! docker exec database pg_isready -U admin > /dev/null 2>&1; do
+        echo "Waiting is PostgreSQL run ..."
+        sleep 5
+      done
+      
+      echo "PostgreSQL is running."
+      echo $(DATABASE_URL)
+    else
+      echo "The Docker container is not running."
+    fi
+  displayName: 'Check Docker container status'
+
+- script: |
+    cd backend
+    npm install
+    npx prisma migrate dev --name init
+    npm run seed
+    npm run test
+  displayName: 'install & test'
+
+- script: |
+    docker stop database
+    docker rm database
+  displayName: 'Clean up PostgreSQL Docker Container'

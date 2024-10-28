@@ -4,12 +4,13 @@ import { PrismaClient } from "@prisma/client"
 const prisma = new PrismaClient()
 
 const insertEmployeeDAO = async (objEmployee: Employee) => {
+    console.log('insertEmployeeDAO')
     const result = await prisma.employee.create({
         data: {
             firstName: objEmployee.firstName,
             lastName: objEmployee.lastName,
             address: objEmployee.address,
-            departmentId: objEmployee.departmentId,
+            departmentId: parseInt(objEmployee.departmentId),
             telephone: objEmployee.telephone,
             imageUrl: objEmployee.imageUrl,
             hireDate: new Date(objEmployee.hireDate)
@@ -18,10 +19,12 @@ const insertEmployeeDAO = async (objEmployee: Employee) => {
 
     const employeeId = result.id
 
+    console.log(employeeId)
+
     await prisma.employee_Department_Log.create({
         data: {
             employeeId: employeeId,
-            departmentId: objEmployee.departmentId
+            departmentId: parseInt(objEmployee.departmentId)
         }
     })
     return result;
@@ -50,7 +53,7 @@ const updateEmployeeDAO = async (objEmployee: Employee) => {
             address: objEmployee.address,
             telephone: objEmployee.telephone,
             imageUrl: objEmployee.imageUrl,
-            departmentId: objEmployee.departmentId
+            departmentId: parseInt(objEmployee.departmentId)
         }
     })
     return result

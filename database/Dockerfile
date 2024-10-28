@@ -1,1 +1,1 @@
-from postgres:17beta2
+FROM postgres:17beta2

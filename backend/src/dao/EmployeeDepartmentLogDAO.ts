@@ -18,7 +18,7 @@ const getEmployeDepartmentLogsByEmployeeDAO = async (employeeId) => {
             department: true
         },
         where: {
-            employeeId: employeeId
+            employeeId: parseInt(employeeId)
         }
     })
     return result
