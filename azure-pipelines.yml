@@ -44,10 +44,6 @@ steps:
   displayName: 'Run PostgreSQL Docker Container'
 
 - script: |
-    sleep 70
-
-
-- script: |
     if [ $(docker ps -q -f name=database) ]; then
       echo "Docker container is running."
       while ! docker exec database pg_isready -U admin > /dev/null 2>&1; do
