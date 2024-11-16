@@ -8,10 +8,9 @@ const upload = multer({ dest: 'uploads/' });
 const insertEmployee = async (request: Request, response: Response): Promise<void> => {
     try {
         const imageFile = request.file
-        console.log('inserEmployee method')
         
         const filePath = 'http://'.concat(process.env.BACKEND_SERVER).concat(':').concat(process.env.BACKEND_PORT).concat('/').concat('uploads').concat('/').concat(imageFile.originalname)
-        console.log('filePath: ' + filePath)
+        
         const objEmployee = request.body as Employee
         objEmployee.imageUrl = filePath
 

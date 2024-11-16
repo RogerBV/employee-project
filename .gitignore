@@ -10,6 +10,7 @@ lerna-debug.log*
 backend/dist
 backend/uploads
 backend/node_modules
+backend/prisma/migrations
 frontend/node_modules
 node_modules
 dist

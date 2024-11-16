@@ -12,7 +12,9 @@ const handleResponse = async (response: Response) => {
 
 const getAllDepartments = async () => {
     try {
-        const response = await fetch(BACKENDSERVER + 'GetAllDepartments');
+        const response = await fetch(BACKENDSERVER + 'GetAllDepartments',{
+            credentials: 'include'
+        });
         return await handleResponse(response);
     } catch (error) {
         console.error("Failed to fetch departments:", error);
@@ -121,6 +123,30 @@ const activateDeactivateEmployee = async (employeeId, employeeStatus) => {
     }
 }
 
+const loginUser = async (userName, password) => {
+    try {
+        console.log('URL: ' + BACKENDSERVER + 'login');
+        const response = await fetch(BACKENDSERVER + 'login', {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                userName: userName,
+                password: password
+            })
+        });
+        if (response.ok) {
+            const user = await response.json()
+            return user;
+        }
+        return await handleResponse(response);
+    } catch(error) {
+        console.log()
+    }
+}
+
 export { 
     getAllDepartments, 
     getAllEmployees, 
@@ -128,5 +154,6 @@ export {
     deleteEmployee, 
     getEmployeeDepartmentsByEmployee, 
     updateEmployeeDepartment, 
-    activateDeactivateEmployee 
+    activateDeactivateEmployee,
+    loginUser
 }

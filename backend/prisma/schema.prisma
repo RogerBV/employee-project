@@ -38,3 +38,10 @@ model Employee_Department_Log {
     department Department @relation(fields: [departmentId], references: [id])
     logDate DateTime @default(now()) @db.Timestamptz(6)
 }
+
+model User {
+    id Int @id @default(autoincrement())
+    userName String @db.VarChar(20)
+    password String @db.VarChar(80)
+    status Int @default(1)
+}

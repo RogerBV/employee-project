@@ -3,8 +3,14 @@ import { getAllDepartmentsDAO, insertDepartmentDAO } from "../dao/DepartmentDAO"
 
 const getAllDepartments = async (request: Request, response: Response): Promise<void> => {
     try {
-        const result = await getAllDepartmentsDAO()
-        response.json(result)
+        const token = request.cookies.access_token
+        console.log('Token: ' + token);
+        if (!token) {
+            response.status(403).send('Access not authorized')
+        } else {
+            const result = await getAllDepartmentsDAO()
+            response.json(result)
+        }
     } catch(error) {
         console.error(error)
     }

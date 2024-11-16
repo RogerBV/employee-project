@@ -1,10 +1,10 @@
 import Employee from "../entities/Employee";
 import { PrismaClient } from "@prisma/client"
+import { saveKeyValue, getValueByKey } from '../redisDao/Memory'
 
 const prisma = new PrismaClient()
 
 const insertEmployeeDAO = async (objEmployee: Employee) => {
-    console.log('insertEmployeeDAO')
     const result = await prisma.employee.create({
         data: {
             firstName: objEmployee.firstName,
@@ -17,9 +17,9 @@ const insertEmployeeDAO = async (objEmployee: Employee) => {
         }
     })
 
-    const employeeId = result.id
+    saveKeyValue('User', 'RogerBV')
 
-    console.log(employeeId)
+    const employeeId = result.id
 
     await prisma.employee_Department_Log.create({
         data: {
@@ -60,6 +60,7 @@ const updateEmployeeDAO = async (objEmployee: Employee) => {
 }
 
 const getAllEmployeesDAO = async () => {
+    await getCurrentUser()
     const result = await prisma.employee.findMany({
         include: {
             department: true
@@ -115,4 +116,10 @@ const updateEmployeeDepartmentDAO = async (employeeId, departmentId) => {
     })
     return result;
 }
+
+const getCurrentUser = async () => {
+    const user = await getValueByKey('User')
+    //console.log('User: ' + user)
+}
+
 export { insertEmployeeDAO, deleteEmployeeDAO, updateEmployeeDAO, getAllEmployeesDAO, getEmployeeByIdDAO, activateDeactivateEmployeeDAO, updateEmployeeDepartmentDAO } 

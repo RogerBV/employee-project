@@ -1,3 +1,4 @@
 frontend/node_modules
-
 frontend/dist/
+backend/node_modules
+graphql_backend/node_modules

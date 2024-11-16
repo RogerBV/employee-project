@@ -1,5 +1,16 @@
 version: '3'
 services:
+  redis-database:
+    container_name: redis-database
+    build: 
+      context: .
+      dockerfile: ./redis-database/Dockerfile
+    env_file:
+      - ./.env
+    ports:
+      - "${REDIS_DB_PORT}:6379"
+    networks:
+      - networkdev
   employeedb:
     build: 
       context: .
@@ -34,6 +45,12 @@ services:
       employeedb:
         condition: service_healthy
     command: bash -c "npx prisma migrate dev --name init && npm run seed && npm run start"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://${BACKEND_SERVER}:${BACKEND_PORT}/getAllEmployees"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 10s
     volumes:
       - ./backend:/app/
     networks:
@@ -49,7 +66,8 @@ services:
     ports:
       - "${FRONTEND_PORT}:5173"
     depends_on:
-      - backend
+      backend:
+        condition: service_healthy
     command: bash -c "npm install && npm run dev"
     volumes:
       - ./frontend:/app
