@@ -7,6 +7,7 @@ React, Typescript, Nodejs, Postgresql, Bootstrap 5, Prisma ORM and docker compos
 You can run this application just running the next commands 
 
   docker-compose -f docker-compose.yml build
+  
   docker-compose -f docker-compose.yml up -d
 
 After that, the application will run on http://localhost:5173/
