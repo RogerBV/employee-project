@@ -12,7 +12,7 @@ const getAllDepartments = async (request: Request, response: Response): Promise<
             response.json(result)
         }
     } catch(error) {
-        console.error(error)
+        response.sendStatus(500).json({ error: 'Internal Server Error' })
     }
 }
 
@@ -22,7 +22,7 @@ const insertDepartment = async (request: Request, response: Response): Promise<v
         const result = await insertDepartmentDAO(objDepartment.departmentName)
         response.json(result)
     } catch(error) {
-        console.error(error);
+        response.sendStatus(500).json({ error: 'Internal Server Error' })
     }
 }
 

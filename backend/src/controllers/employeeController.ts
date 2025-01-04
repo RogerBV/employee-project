@@ -47,7 +47,7 @@ const getAllEmployees = async (request: Request, response: Response): Promise<vo
         const result = await getAllEmployeesDAO()
         response.json(result)
     } catch(error) {
-        response.sendStatus(500).json({ error: "Internal Server Error" })
+        //response.sendStatus(500).json({ error: "Internal Server Error" })
     }
 }
 
