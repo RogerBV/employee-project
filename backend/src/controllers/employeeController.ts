@@ -18,7 +18,7 @@ const insertEmployee = async (request: Request, response: Response): Promise<voi
         response.json(result)
     } catch(error) {
         console.error(error)
-        response.sendStatus(500).json({ error: "Internal Server Error for insertEmployee" });
+        response.status(500).json({ error: "Internal Server Error for insertEmployee" });
     }
 }
 
@@ -28,7 +28,7 @@ const deleteEmployee = async (request: Request, response: Response): Promise<voi
         await deleteEmployeeDAO(objEmployee.employeeId)
         response.json(1)
     } catch(error) {
-        response.sendStatus(500).json({ error: "Internal Server Error" })
+        response.status(500).json({ error: "Internal Server Error" })
     }
 }
 
@@ -38,7 +38,7 @@ const updateEmployee = async (request: Request, response: Response): Promise<voi
         const result = await updateEmployeeDAO(objEmployee)
         response.json(result)
     } catch(error) {
-        response.sendStatus(500).json({ error: "Internal Server Error" })
+        response.status(500).json({ error: "Internal Server Error" })
     }
 }
 
@@ -47,7 +47,8 @@ const getAllEmployees = async (request: Request, response: Response): Promise<vo
         const result = await getAllEmployeesDAO()
         response.json(result)
     } catch(error) {
-        //response.sendStatus(500).json({ error: "Internal Server Error" })
+        console.log(JSON.stringify(error))
+        response.status(500).json({ error: "Internal Server Error" })
     }
 }
 
@@ -57,7 +58,7 @@ const getEmployeeById = async (request: Request, response: Response): Promise<vo
         const result = await getEmployeeByIdDAO(params.employeeId)
         response.json(result)
     } catch(error) {
-        response.sendStatus(500).json({ error: "Internal Server Error" })
+        response.status(500).json({ error: "Internal Server Error" })
     }
 }
 
@@ -68,7 +69,7 @@ const activateDeactivateEmployee = async (request: Request, response: Response):
         const result = await activateDeactivateEmployeeDAO(params.employeeId, params.status)
         response.json(result)
     } catch(error) {
-        response.sendStatus(500).json({ error: "Internal Server Error" })
+        response.status(500).json({ error: "Internal Server Error" })
     }
 }
 

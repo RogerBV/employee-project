@@ -13,8 +13,8 @@ const port = process.env.BACKEND_PORT
 const router = express.Router()
 
 const corsOptions = {
-    origin: 'http://localhost:5173',
-    credentials: true
+    origin: '*',
+    credentials: false
 }
 
 app.use(cors(corsOptions))

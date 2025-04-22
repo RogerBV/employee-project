@@ -3,16 +3,11 @@ import { getAllDepartmentsDAO, insertDepartmentDAO } from "../dao/DepartmentDAO"
 
 const getAllDepartments = async (request: Request, response: Response): Promise<void> => {
     try {
-        const token = request.cookies.access_token
-        console.log('Token: ' + token);
-        if (!token) {
-            response.status(403).send('Access not authorized')
-        } else {
-            const result = await getAllDepartmentsDAO()
-            response.json(result)
-        }
+        const result = await getAllDepartmentsDAO()
+        response.json(result)
     } catch(error) {
-        response.sendStatus(500).json({ error: 'Internal Server Error' })
+        console.log(JSON.stringify(error))
+        response.status(500).json({ error: 'Internal Server Error' })
     }
 }
 
@@ -22,7 +17,7 @@ const insertDepartment = async (request: Request, response: Response): Promise<v
         const result = await insertDepartmentDAO(objDepartment.departmentName)
         response.json(result)
     } catch(error) {
-        response.sendStatus(500).json({ error: 'Internal Server Error' })
+        response.status(500).json({ error: 'Internal Server Error' })
     }
 }
 

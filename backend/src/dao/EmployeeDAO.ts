@@ -1,6 +1,6 @@
 import Employee from "../entities/Employee";
 import { PrismaClient } from "@prisma/client"
-import { saveKeyValue, getValueByKey } from '../redisDao/Memory'
+//import { saveKeyValue, getValueByKey } from '../redisDao/Memory'
 
 const prisma = new PrismaClient()
 
@@ -17,7 +17,7 @@ const insertEmployeeDAO = async (objEmployee: Employee) => {
         }
     })
 
-    saveKeyValue('User', 'RogerBV')
+    //saveKeyValue('User', 'RogerBV')
 
     const employeeId = result.id
 
@@ -118,7 +118,7 @@ const updateEmployeeDepartmentDAO = async (employeeId, departmentId) => {
 }
 
 const getCurrentUser = async () => {
-    const user = await getValueByKey('User')
+    //const user = await getValueByKey('User')
     //console.log('User: ' + user)
 }
 

@@ -14,7 +14,7 @@ const updateEmployeeDepartment = async (request: Request, response: Response): P
             await createNewEmployeeDepartmentLog(request, response)
         }
     } catch(error) {
-        response.sendStatus(500).json({ error: "Internal Server Error" })
+        response.status(500).json({ error: "Internal Server Error" })
     }
 }
 
@@ -24,7 +24,7 @@ const createNewEmployeeDepartmentLog = async (request: Request, response: Respon
         const result = await createNewEmployeeDepartmentLogDAO(params)
         response.json(result)
     } catch (error) {
-        response.sendStatus(500).json({ error: "Internal Server Error" })
+        response.status(500).json({ error: "Internal Server Error" })
     }
 }
 
@@ -34,7 +34,7 @@ const getEmployeDepartmentLogsByEmployee = async (request: Request, response: Re
         const result = await getEmployeDepartmentLogsByEmployeeDAO(params.employeeId)
         response.json(result)
     } catch (error) {
-        response.sendStatus(500).json({ error: "Internal Server Error" })
+        response.status(500).json({ error: "Internal Server Error" })
     }
 }
 

@@ -7,6 +7,8 @@ RUN npm install
 
 COPY backend/ /app/
 
+COPY ./backend/prisma ./prisma
+
 RUN npm run prisma:generate
 
 EXPOSE 3000

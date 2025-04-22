@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backend-config
+data:
+  POSTGRES_DB: employeedb
+  DB_HOST: database-service
+  BACKEND_PORT: "3000"
+  BACKEND_SERVER: localhost
+  DB_ENGINE: postgresql

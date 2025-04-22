@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      initContainers:
+        - name: migrate
+          image: rogerbv9017/employeebackend:latest
+          command: ["sh", "-c", "npx prisma migrate deploy && npx tsx prisma/seed.ts"]
+          envFrom:
+            - configMapRef:
+                name: backend-config
+          env:
+            - name: POSTGRES_USER
+              value: admin
+            - name: POSTGRES_PASSWORD
+              value: "123456"
+            - name: DATABASE_URL
+              value: "postgresql://admin:123456@database-service:5432/employeedb?schema=public"
+      containers:
+        - name: backend
+          image: rogerbv9017/employeebackend:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 3000
+          envFrom:
+            - configMapRef:
+                name: backend-config
+          env: 
+              - name: POSTGRES_USER
+                value: admin
+              - name: POSTGRES_PASSWORD
+                value: "123456"
+              - name: DATABASE_URL
+                value: "postgresql://admin:123456@database-service:5432/employeedb?schema=public"
+              
