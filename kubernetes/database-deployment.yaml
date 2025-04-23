@@ -15,6 +15,9 @@ spec:
       containers:
         - name: postgres
           image: postgres:17beta2
+          volumeMounts:
+            - name: postgres-storage
+              mountPath: /var/lib/postgresql/data
           env: 
             - name: POSTGRES_DB
               value: employeedb
@@ -24,3 +27,7 @@ spec:
               value: "123456"
           ports:
             - containerPort: 5432
+      volumes:
+        - name: postgres-storage
+          persistentVolumeClaim:
+            claimName: database-pvc
